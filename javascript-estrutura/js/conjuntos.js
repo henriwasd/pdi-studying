@@ -53,13 +53,63 @@ function Set() {
     }
     return unionSet;
   };
+
+  this.intersection = function (otherSet) {
+    var intersectionSet = new Set(),
+    values = this.values();
+
+    for (let i = 0; i < values.length; i++) {
+      if (otherSet.has(values[i])) {
+        intersectionSet.add(values[i]);
+      }
+    }
+    return intersectionSet;
+  }
+
+  this.difference = function (otherSet) {
+    var differenceSet = new Set(),
+    values = this.values();
+
+    for (let i = 0; i < values.length; i++) {
+      if (!otherSet.has(values[i])) {
+        differenceSet.add(values[i]);
+      }
+    }
+    return differenceSet;
+  }
+
+  this.subset = function (otherSet) {
+    if (this.size() > otherSet.size()) {
+      return false;
+    }
+
+    var values = this.values();
+
+    for (let i = 0; i < values.length; i++) {
+      if (!otherSet.has(values[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
-var set = new Set();
+var setA = new Set();
 
-set.add(1);
-set.add(2);
-set.add(3);
-set.add(4);
+setA.add(1);
+setA.add(2);
 
-console.log(set.size());
+var setB = new Set();
+
+setB.add(1);
+setB.add(2);
+setB.add(3);
+
+var setC = new Set();
+
+setC.add(2);
+setC.add(3);
+setC.add(4);
+
+console.log(setA.subset(setB));
+console.log(setA.subset(setC));
